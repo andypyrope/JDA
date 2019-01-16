@@ -26,6 +26,7 @@ import net.dv8tion.jda.api.requests.restaction.pagination.PaginationAction;
 import net.dv8tion.jda.api.utils.MiscUtil;
 import net.dv8tion.jda.internal.JDAImpl;
 import net.dv8tion.jda.internal.entities.EntityBuilder;
+import net.dv8tion.jda.internal.entities.MessageHistoryImpl;
 import net.dv8tion.jda.internal.requests.RestActionImpl;
 import net.dv8tion.jda.internal.requests.Route;
 import net.dv8tion.jda.internal.requests.restaction.AuditableRestActionImpl;
@@ -1185,7 +1186,7 @@ public interface MessageChannel extends ISnowflake, Formattable
      */
     default MessageHistory getHistory()
     {
-        return new MessageHistory(this);
+        return new MessageHistoryImpl(this);
     }
 
     /**
@@ -1286,15 +1287,15 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message around the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryAround(MessageChannel, String) MessageHistory.getHistoryAround(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryAround(MessageChannel, String) MessageHistoryImpl.getHistoryAround(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryAround(String messageId, int limit)
+    default MessageRetrieveAction getHistoryAround(String messageId, int limit)
     {
-        return MessageHistory.getHistoryAround(this, messageId).limit(limit);
+        return MessageHistoryImpl.getHistoryAround(this, messageId).limit(limit);
     }
 
     /**
@@ -1351,13 +1352,13 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message around the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryAround(MessageChannel, String) MessageHistory.getHistoryAround(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryAround(MessageChannel, String) MessageHistoryImpl.getHistoryAround(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryAround(long messageId, int limit)
+    default MessageRetrieveAction getHistoryAround(long messageId, int limit)
     {
         return getHistoryAround(Long.toUnsignedString(messageId), limit );
     }
@@ -1416,13 +1417,13 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message around the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryAround(MessageChannel, String) MessageHistory.getHistoryAround(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryAround(MessageChannel, String) MessageHistoryImpl.getHistoryAround(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryAround(Message message, int limit)
+    default MessageRetrieveAction getHistoryAround(Message message, int limit)
     {
         Checks.notNull(message, "Provided target message");
         return getHistoryAround(message.getId(), limit);
@@ -1474,15 +1475,15 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message after the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryAfter(MessageChannel, String) MessageHistory.getHistoryAfter(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryAfter(MessageChannel, String) MessageHistoryImpl.getHistoryAfter(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryAfter(String messageId, int limit)
+    default MessageRetrieveAction getHistoryAfter(String messageId, int limit)
     {
-        return MessageHistory.getHistoryAfter(this, messageId).limit(limit);
+        return MessageHistoryImpl.getHistoryAfter(this, messageId).limit(limit);
     }
 
     /**
@@ -1528,13 +1529,13 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message after the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryAfter(MessageChannel, String) MessageHistory.getHistoryAfter(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryAfter(MessageChannel, String) MessageHistoryImpl.getHistoryAfter(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryAfter(long messageId, int limit)
+    default MessageRetrieveAction getHistoryAfter(long messageId, int limit)
     {
         return getHistoryAfter(Long.toUnsignedString(messageId), limit);
     }
@@ -1585,13 +1586,13 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message after the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryAfter(MessageChannel, String) MessageHistory.getHistoryAfter(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryAfter(MessageChannel, String) MessageHistoryImpl.getHistoryAfter(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryAfter(Message message, int limit)
+    default MessageRetrieveAction getHistoryAfter(Message message, int limit)
     {
         Checks.notNull(message, "Message");
         return getHistoryAfter(message.getId(), limit);
@@ -1643,15 +1644,15 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message before the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryBefore(MessageChannel, String) MessageHistory.getHistoryBefore(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryBefore(MessageChannel, String) MessageHistoryImpl.getHistoryBefore(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryBefore(String messageId, int limit)
+    default MessageRetrieveAction getHistoryBefore(String messageId, int limit)
     {
-        return MessageHistory.getHistoryBefore(this, messageId).limit(limit);
+        return MessageHistoryImpl.getHistoryBefore(this, messageId).limit(limit);
     }
 
     /**
@@ -1700,13 +1701,13 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message before the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryBefore(MessageChannel, String) MessageHistory.getHistoryBefore(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryBefore(MessageChannel, String) MessageHistoryImpl.getHistoryBefore(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryBefore(long messageId, int limit)
+    default MessageRetrieveAction getHistoryBefore(long messageId, int limit)
     {
         return getHistoryBefore(Long.toUnsignedString(messageId), limit);
     }
@@ -1757,13 +1758,13 @@ public interface MessageChannel extends ISnowflake, Formattable
      *             <li>{@link net.dv8tion.jda.api.Permission#MESSAGE_HISTORY Permission.MESSAGE_HISTORY}</li>
      *         </ul>
      *
-     * @return {@link net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction MessageHistory.MessageRetrieveAction}
+     * @return {@link MessageRetrieveAction MessageHistory.MessageRetrieveAction}
      *         <br>Provides a MessageHistory object with message before the provided message loaded into it.
      *
-     * @see    net.dv8tion.jda.api.entities.MessageHistory#getHistoryBefore(MessageChannel, String) MessageHistory.getHistoryBefore(MessageChannel, String)
+     * @see    net.dv8tion.jda.internal.entities.MessageHistoryImpl#getHistoryBefore(MessageChannel, String) MessageHistoryImpl.getHistoryBefore(MessageChannel, String)
      */
     @CheckReturnValue
-    default MessageHistory.MessageRetrieveAction getHistoryBefore(Message message, int limit)
+    default MessageRetrieveAction getHistoryBefore(Message message, int limit)
     {
         Checks.notNull(message, "Message");
         return getHistoryBefore(message.getId(), limit);
